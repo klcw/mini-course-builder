@@ -6,6 +6,7 @@
   <title>MOSFET in the Ohmic Region</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/theme.js"></script>
+  <script src="js/simulator.js" defer></script>
   <script src="js/course.js" defer></script>
 </head>
 <body>
@@ -159,6 +160,54 @@
         <li>the E-MOSFET must be chosen so that R<sub>DS(on)</sub> is much smaller than R<sub>D</sub>.</li>
       </ul>
       <p>High accuracy is not needed when analysing switching circuits. All that matters is that the input and output voltages can be clearly recognised as low or high.</p>
+    </section>
+
+    <!-- Not from a slide: practice tool for the passive-load switch in the examples above -->
+    <section class="lesson" id="simulator" data-title="Try it: switching simulator">
+      <h2>Try it: switching simulator</h2>
+      <p>This is the circuit from the examples: a MOSFET with a drain resistor R<sub>D</sub> connected to V<sub>DD</sub>, and the output v<sub>out</sub> taken at the drain. Change the values and watch which state the MOSFET is in, where the Q point lands on the load line, and what v<sub>out</sub> becomes.</p>
+      <p>The starting values match the worked example (2N7000, 20 V, 1 kΩ, V<sub>GS</sub> = 4.5 V), so you can check the answer first: about 0.12 V (0.119 V before rounding).</p>
+
+      <noscript><p><strong>The simulator needs JavaScript turned on.</strong></p></noscript>
+
+      <form class="sim" id="sim" hidden>
+        <div class="sim-controls">
+          <label for="sim-device">MOSFET</label>
+          <select id="sim-device"></select>
+
+          <label for="sim-vdd">Supply V<sub>DD</sub>: <output id="sim-vdd-out" for="sim-vdd"></output></label>
+          <input type="range" id="sim-vdd" min="5" max="30" step="1" value="20">
+
+          <label for="sim-rd">Drain resistor R<sub>D</sub>: <output id="sim-rd-out" for="sim-rd"></output></label>
+          <input type="range" id="sim-rd" min="0" max="10" step="1" value="6">
+
+          <label for="sim-vgs">Gate voltage V<sub>GS</sub>: <output id="sim-vgs-out" for="sim-vgs"></output></label>
+          <input type="range" id="sim-vgs" min="0" max="12" step="0.1" value="4.5">
+          <div class="sim-quick">
+            <button type="button" id="sim-low">Low input (0 V)</button>
+            <button type="button" id="sim-high">High input (V<sub>GS(on)</sub>)</button>
+          </div>
+        </div>
+
+        <div class="sim-results" aria-live="polite">
+          <p class="sim-state" id="sim-state"></p>
+          <dl>
+            <dt>V<sub>GS(th)</sub> / V<sub>GS(on)</sub></dt><dd id="sim-thresholds"></dd>
+            <dt>I<sub>D(sat)</sub> = V<sub>DD</sub> / R<sub>D</sub></dt><dd id="sim-idsat"></dd>
+            <dt>I<sub>D(on)</sub></dt><dd id="sim-idon"></dd>
+            <dt>Output v<sub>out</sub></dt><dd id="sim-vout"></dd>
+          </dl>
+          <p id="sim-working"></p>
+          <p id="sim-check"></p>
+        </div>
+
+        <figure class="sim-graph">
+          <svg id="sim-svg" viewBox="0 0 340 215" role="img" aria-labelledby="sim-caption"></svg>
+          <figcaption id="sim-caption">DC load line, with the I<sub>D(on)</sub> level dashed and the Q point marked.</figcaption>
+        </figure>
+      </form>
+
+      <p class="figure-note">The simulator uses the same switching model as the slides. It doesn't calculate v<sub>out</sub> when the MOSFET is only partly on, because the slides' method doesn't cover that case.</p>
     </section>
 
     <!-- Slide 12 -->

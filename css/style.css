@@ -162,3 +162,95 @@ th {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Switching simulator */
+.sim[hidden] {
+  display: none;
+}
+
+.sim-controls {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.sim-controls label {
+  margin-top: 0.5rem;
+}
+
+.sim-controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.sim-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.sim-results {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.sim-state {
+  margin-top: 0;
+  font-weight: 700;
+}
+
+.sim-results dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.sim-results dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.sim-graph {
+  margin: 1rem 0 0;
+}
+
+.sim-graph svg {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+}
+
+.sim-graph figcaption {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.sim-graph .axis {
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.sim-graph .loadline {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.sim-graph .idon {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.sim-graph .qpoint {
+  fill: var(--text);
+}
+
+.sim-graph .label {
+  fill: var(--text);
+  font-size: 11px;
+}

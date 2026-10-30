@@ -8,10 +8,11 @@
 ## Project Structure
 
 - `CLAUDE.md` — this file.
-- `index.html` — the whole course: one `<section class="lesson">` per slide.
+- `index.html` — the whole course: one `<section class="lesson">` per slide, plus a simulator section.
 - `css/style.css` — shared styles, including the light and dark theme colours.
 - `js/theme.js` — light/dark theme toggle.
 - `js/course.js` — shows one section at a time, with Previous/Next and a section menu.
+- `js/simulator.js` — the switching simulator section: works out the MOSFET state, v_out and load line from the slides' switching model.
 
 ## Key Requirements
 
