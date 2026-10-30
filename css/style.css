@@ -1,0 +1,164 @@
+/* Plain styling for now. Colours live in variables so the light and dark themes only differ here. */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f4f5;
+  --text: #1a1a1a;
+  --muted: #555555;
+  --border: #cccccc;
+  --accent: #0a5fb4;
+}
+
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --text: #ececec;
+  --muted: #b0b0b0;
+  --border: #444444;
+  --accent: #7ab8f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px 16px 96px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.site-header,
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.course-code {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+}
+
+h1:focus,
+h2:focus {
+  outline: none;
+}
+
+a {
+  color: var(--accent);
+}
+
+button,
+select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  min-height: 2.5rem;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.formula {
+  padding: 0.5rem 0.75rem;
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  overflow-x: auto;
+}
+
+.figure-note,
+.source {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  font-style: italic;
+}
+
+/* Wide tables scroll sideways inside their box instead of widening the page on phones. */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  background: var(--surface);
+}
+
+.lesson-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 10px 16px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.lesson-nav[hidden] {
+  display: none;
+}
+
+.lesson-nav label {
+  flex: 0 1 18rem;
+  min-width: 0;
+}
+
+.lesson-nav select {
+  width: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

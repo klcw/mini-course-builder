@@ -8,7 +8,10 @@
 ## Project Structure
 
 - `CLAUDE.md` — this file.
-- Nothing else yet. Update this list as files are added.
+- `index.html` — the whole course: one `<section class="lesson">` per slide.
+- `css/style.css` — shared styles, including the light and dark theme colours.
+- `js/theme.js` — light/dark theme toggle.
+- `js/course.js` — shows one section at a time, with Previous/Next and a section menu.
 
 ## Key Requirements
 

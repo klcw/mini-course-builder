@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MOSFET in the Ohmic Region</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+  <script src="js/course.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <p class="course-code">E2619C Electronic Devices and Circuits · Learning Unit 11</p>
+    <button type="button" id="theme-toggle">Switch to dark theme</button>
+  </header>
+
+  <main id="course">
+    <!-- Slides 1 and 15: title and lesson outcomes -->
+    <section class="lesson" id="intro" data-title="Introduction">
+      <h1>MOSFET in the Ohmic Region</h1>
+      <p>This unit looks at the enhancement-mode MOSFET (E-MOSFET) when it is used as a switch. By the end, you should be able to:</p>
+      <ul>
+        <li>describe the drain characteristics of an E-MOSFET in the ohmic and active regions;</li>
+        <li>explain the difference between V<sub>GS(th)</sub> and V<sub>GS(on)</sub>, and how each relates to I<sub>D</sub> and V<sub>DS</sub>;</li>
+        <li>work out the output voltage of a MOSFET switching circuit;</li>
+        <li>explain how MOSFETs are used as passive and active loads.</li>
+      </ul>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="lesson" id="drain-curves" data-title="E-MOSFET drain curves">
+      <h2>E-MOSFET drain curves</h2>
+      <p>An E-MOSFET conducts only once its gate is driven past a threshold. While V<sub>GS</sub> is below the threshold voltage V<sub>GS(th)</sub>, no drain current flows at all. Once V<sub>GS</sub> rises above V<sub>GS(th)</sub>, a channel forms between the source and the drain and current starts to flow.</p>
+      <p>From that point on, the gate voltage controls how much drain current flows. For small-signal devices, V<sub>GS(th)</sub> is typically 1 to 3 V, and the power rating is 1 W or less.</p>
+      <p class="figure-note">Slide figures: the I<sub>D</sub>–V<sub>DS</sub> characteristic curve and the biased circuit (gate G, drain D, source S).</p>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="lesson" id="two-regions" data-title="Ohmic and active regions">
+      <h2>Ohmic and active regions</h2>
+      <p>Which region the E-MOSFET works in depends on V<sub>DS</sub> compared with V<sub>GS</sub> − V<sub>GS(th)</sub>:</p>
+      <ul>
+        <li><strong>Ohmic region</strong>, when V<sub>DS</sub> &lt; V<sub>GS</sub> − V<sub>GS(th)</sub>. The MOSFET behaves like a resistor, so it can be used as a load switch.</li>
+        <li><strong>Active region</strong>, when V<sub>DS</sub> ≥ V<sub>GS</sub> − V<sub>GS(th)</sub>. The MOSFET behaves like a current source, so it can be used as an amplifier.</li>
+      </ul>
+      <p>In practice the E-MOSFET is mostly used as a switch. Its low output impedance and high switching speed suit that job, as the later sections show.</p>
+      <p class="figure-note">Slide figure: I<sub>D</sub>–V<sub>DS</sub> curve with the ohmic and active regions labelled.</p>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="lesson" id="rds-on" data-title="The ohmic region and RDS(on)">
+      <h2>The ohmic region and R<sub>DS(on)</sub></h2>
+      <p>In the ohmic region, the E-MOSFET acts like a single resistance, called R<sub>DS(on)</sub>:</p>
+      <p class="formula">R<sub>DS(on)</sub> = V<sub>DS(on)</sub> / I<sub>D(on)</sub></p>
+      <p>Manufacturers find this value at a test point, Q<sub>test</sub>, which sits in the ohmic region of one V<sub>GS</sub> curve. They measure I<sub>D(on)</sub> and V<sub>DS(on)</sub> there and list both on the datasheet. The gate voltage they used for the measurement is V<sub>GS(on)</sub>.</p>
+      <p class="figure-note">Slide figure: I<sub>D</sub>–V<sub>DS</sub> curve for V<sub>GS</sub> = V<sub>GS(on)</sub>, marking Q<sub>test</sub>, I<sub>D(on)</sub> and V<sub>DS(on)</sub>.</p>
+    </section>
+
+    <!-- Slide 5 -->
+    <section class="lesson" id="transconductance" data-title="The transconductance curve">
+      <h2>The transconductance curve</h2>
+      <p>The transconductance curve plots I<sub>D</sub> against V<sub>GS</sub>. Once V<sub>GS</sub> passes V<sub>GS(th)</sub>, drain current rises quickly through the active region until it reaches the saturation current I<sub>D(sat)</sub>, where the device enters the ohmic region.</p>
+      <p>Past that point, I<sub>D</sub> stops rising even if V<sub>GS</sub> keeps increasing. To be sure the switch is fully on (hard saturation), the on-state gate voltage V<sub>GS(on)</sub> must be well above V<sub>GS(th)</sub>.</p>
+      <p class="figure-note">Slide figure: transconductance curve marking V<sub>GS(th)</sub>, V<sub>GS(on)</sub>, I<sub>D(sat)</sub>, and the active and ohmic parts.</p>
+    </section>
+
+    <!-- Slide 6 -->
+    <section class="lesson" id="rds-example" data-title="Example: RDS(on) from a datasheet">
+      <h2>Example: finding R<sub>DS(on)</sub> from a datasheet</h2>
+      <p>The 2N7000 is an N-channel E-MOSFET. Its datasheet lists the drain-source on-voltage, V<sub>DS(on)</sub>, at two test conditions:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Conditions</th><th>Typical</th><th>Maximum</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>V<sub>GS</sub> = 10 V, I<sub>D</sub> = 500 mA</td><td>0.6 V</td><td>2.5 V</td></tr>
+            <tr><td>V<sub>GS</sub> = 4.5 V, I<sub>D</sub> = 75 mA</td><td>0.14 V</td><td>0.4 V</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Use the second row. With V<sub>GS</sub> = V<sub>GS(on)</sub> = 4.5 V, the datasheet gives I<sub>D(on)</sub> = 75 mA and V<sub>DS(on)</sub> = 0.14 V. Then:</p>
+      <p class="formula">R<sub>DS(on)</sub> = 0.14 V / 75 mA ≈ 1.87 Ω</p>
+    </section>
+
+    <!-- Slide 7 -->
+    <section class="lesson" id="emosfet-table" data-title="Comparing E-MOSFETs">
+      <h2>Comparing E-MOSFETs</h2>
+      <p>The table below lists a sample of small-signal E-MOSFETs. Across these devices, V<sub>GS(th)</sub> ranges from 1.5 to 3 V and R<sub>DS(on)</sub> from 0.3 to 28 Ω.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>V<sub>GS(th)</sub> (V)</th>
+              <th>V<sub>GS(on)</sub> (V)</th>
+              <th>I<sub>D(on)</sub></th>
+              <th>R<sub>DS(on)</sub> (Ω)</th>
+              <th>I<sub>D(max)</sub></th>
+              <th>P<sub>D(max)</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>VN2406L</td><td>1.5</td><td>2.5</td><td>100 mA</td><td>10</td><td>200 mA</td><td>350 mW</td></tr>
+            <tr><td>BS107</td><td>1.75</td><td>2.6</td><td>20 mA</td><td>28</td><td>250 mA</td><td>350 mW</td></tr>
+            <tr><td>2N7000</td><td>2</td><td>4.5</td><td>75 mA</td><td>6</td><td>200 mA</td><td>350 mW</td></tr>
+            <tr><td>VN10LM</td><td>2.5</td><td>5</td><td>200 mA</td><td>7.5</td><td>300 mA</td><td>1 W</td></tr>
+            <tr><td>MPF930</td><td>2.5</td><td>10</td><td>1 A</td><td>0.9</td><td>2 A</td><td>1 W</td></tr>
+            <tr><td>IRFD120</td><td>3</td><td>10</td><td>600 mA</td><td>0.3</td><td>1.3 A</td><td>1 W</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source">Source: Albert Malvino, <cite>Electronic Principles</cite>, Release 2025.</p>
+      <p>Two points follow from the table. When biased in the ohmic region, an E-MOSFET has a low resistance. When biased at cutoff, its resistance is very high, so it behaves almost like an open circuit. That contrast is what makes it a good switch.</p>
+    </section>
+
+    <!-- Slide 8 -->
+    <section class="lesson" id="biasing" data-title="Biasing in the ohmic region">
+      <h2>Biasing in the ohmic region</h2>
+      <p>In a circuit with drain resistor R<sub>D</sub> and supply V<sub>DD</sub>, the drain saturation current is:</p>
+      <p class="formula">I<sub>D(sat)</sub> = V<sub>DD</sub> / R<sub>D</sub></p>
+      <p>The DC load line runs between two points: the saturation current I<sub>D(sat)</sub> on the current axis and the cutoff voltage V<sub>DD</sub> on the voltage axis. The operating point (Q point) is where this load line crosses the drain curve for the V<sub>GS</sub> being applied.</p>
+      <p>When V<sub>GS</sub> = V<sub>GS(on)</sub> and the Q point sits below Q<sub>test</sub>, the device is in the ohmic region. So the rule for ohmic-region biasing is:</p>
+      <p class="formula">I<sub>D(sat)</sub> &lt; I<sub>D(on)</sub> when V<sub>GS</sub> = V<sub>GS(on)</sub></p>
+      <p class="figure-note">Slide figures: switching circuit driven by a 0 to +10 V pulse, and the load line crossing the V<sub>GS(on)</sub> curve below Q<sub>test</sub>.</p>
+    </section>
+
+    <!-- Slide 9 -->
+    <section class="lesson" id="example-low" data-title="Example: low gate voltage">
+      <h2>Example: output voltage with a low gate voltage</h2>
+      <p>A 2N7000 has a 1 kΩ drain resistor connected to a +20 V supply. The output, v<sub>out</sub>, is taken at the drain. The gate is driven by a pulse that switches between 0 V and +4.5 V. Find v<sub>out</sub> for each input level.</p>
+      <p>From the 2N7000 datasheet: V<sub>GS(th)</sub> = 2 V, V<sub>GS(on)</sub> = 4.5 V, I<sub>D(on)</sub> = 75 mA and R<sub>DS(on)</sub> = 6 Ω.</p>
+      <p>Start by plotting the DC load line:</p>
+      <p class="formula">I<sub>D(sat)</sub> = V<sub>DD</sub> / R<sub>D</sub> = 20 V / 1 kΩ = 20 mA</p>
+      <p class="formula">V<sub>DS(off)</sub> = V<sub>DD</sub> = 20 V</p>
+      <p>Now take the low input, V<sub>GS</sub> = 0 V. This is below V<sub>GS(th)</sub>, so the MOSFET is off and acts like an open switch. No drain current flows, so there is no voltage across R<sub>D</sub>, and the output sits at the full supply:</p>
+      <p class="formula">v<sub>out</sub> = 20 V</p>
+      <p class="figure-note">Slide figures: the circuit, the load line from 20 mA to 20 V, and the equivalent circuit with the MOSFET as an open switch.</p>
+    </section>
+
+    <!-- Slide 10 -->
+    <section class="lesson" id="example-high" data-title="Example: high gate voltage">
+      <h2>Example: output voltage with a high gate voltage</h2>
+      <p>Same circuit, now with the high input: V<sub>GS</sub> = 4.5 V = V<sub>GS(on)</sub>, so the MOSFET is switched on.</p>
+      <p>Check the region first. I<sub>D(sat)</sub> (20 mA) is less than I<sub>D(on)</sub> (75 mA), so the MOSFET is biased in the ohmic region.</p>
+      <p>In the ohmic region the MOSFET acts as a resistor of value R<sub>DS(on)</sub>, which is 6 Ω for the 2N7000. The 1 kΩ resistor and the 6 Ω MOSFET form a voltage divider, so:</p>
+      <p class="formula">v<sub>out</sub> = 6 Ω / (1 kΩ + 6 Ω) × 20 V ≈ 0.12 V</p>
+      <p>A low input therefore gives a high output (20 V), and a high input gives a low output (about 0.12 V).</p>
+      <p class="figure-note">Slide figure: equivalent circuit with the MOSFET replaced by a 6 Ω resistor.</p>
+    </section>
+
+    <!-- Slide 11 -->
+    <section class="lesson" id="passive-load" data-title="Passive-load switching">
+      <h2>Passive-load switching</h2>
+      <p>The circuit in the last two examples is the simplest computer circuit you can build. It is called an inverter because its output is always the opposite of its input.</p>
+      <p>For it to work properly, two conditions must hold:</p>
+      <ul>
+        <li>I<sub>D(sat)</sub> must be less than I<sub>D(on)</sub> whenever V<sub>GS</sub> is at or above V<sub>GS(on)</sub>, so the MOSFET is in the ohmic region when on;</li>
+        <li>the E-MOSFET must be chosen so that R<sub>DS(on)</sub> is much smaller than R<sub>D</sub>.</li>
+      </ul>
+      <p>High accuracy is not needed when analysing switching circuits. All that matters is that the input and output voltages can be clearly recognised as low or high.</p>
+    </section>
+
+    <!-- Slide 12 -->
+    <section class="lesson" id="active-load-why" data-title="Why active loads?">
+      <h2>Why active loads?</h2>
+      <p>Integrated circuits (ICs) changed electronics by putting thousands of tiny transistors on a single chip. Early ICs used ordinary resistors as passive loads, but those resistors took up far more space than the MOSFETs around them.</p>
+      <p>The answer was the active load: a MOSFET used as the resistor as well as the switch. This made integrated circuits much smaller, and led to the personal computers we use today.</p>
+    </section>
+
+    <!-- Slide 13 -->
+    <section class="lesson" id="active-load" data-title="Active-load switching">
+      <h2>Active-load switching</h2>
+      <p>An active-load switch stacks two MOSFETs. The lower MOSFET, Q<sub>2</sub>, is the switch you have already met, with v<sub>in</sub> on its gate. The upper MOSFET, Q<sub>1</sub>, replaces the drain resistor, and v<sub>out</sub> is taken where the two meet.</p>
+      <p>Q<sub>1</sub>'s gate is wired to its own drain, so V<sub>GS</sub> = V<sub>DS</sub>. Every operating point of Q<sub>1</sub> must therefore lie on a single line across its drain curves, the two-terminal curve. Q<sub>1</sub> behaves like a two-terminal device with an active resistance:</p>
+      <p class="formula">R<sub>D</sub> = V<sub>DS(active)</sub> / I<sub>D(active)</sub></p>
+      <p>Here V<sub>DS(active)</sub> and I<sub>D(active)</sub> are the voltage and current in the active (saturation) region. For example, where the two-terminal curve meets the V<sub>GS</sub> = 15 V curve at 3 mA:</p>
+      <p class="formula">R<sub>D</sub> = 15 V / 3 mA = 5 kΩ</p>
+      <p class="figure-note">Slide figures: the two-MOSFET circuit, and drain curves for V<sub>GS</sub> = 5, 10 and 15 V crossed by the two-terminal curve.</p>
+    </section>
+
+    <!-- Slide 14 -->
+    <section class="lesson" id="active-load-values" data-title="Active load: resistance values">
+      <h2>Active load: resistance values</h2>
+      <p>The active resistance R<sub>D</sub> is not fixed. It changes slightly from one point on the two-terminal curve to the next:</p>
+      <ul>
+        <li>at V<sub>GS</sub> = 10 V: R<sub>D</sub> = 10 V / 1.6 mA = 6.25 kΩ</li>
+        <li>at V<sub>GS</sub> = 5 V: R<sub>D</sub> = 5 V / 0.7 mA ≈ 7.2 kΩ</li>
+      </ul>
+      <p>If the lower MOSFET has the same drain curves, its on-resistance is found from the ohmic point (2 V at 3 mA):</p>
+      <p class="formula">R<sub>DS(on)</sub> = V<sub>DS(on)</sub> / I<sub>D(on)</sub> = 2 V / 3 mA ≈ 667 Ω</p>
+      <p>As with passive loads, the exact value of R<sub>D</sub> doesn't matter in a switching circuit as long as:</p>
+      <ul>
+        <li>the output voltages are easy to tell apart as low or high, and</li>
+        <li>R<sub>DS(on)</sub> is much smaller than R<sub>D</sub>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <nav class="lesson-nav" id="lesson-nav" hidden aria-label="Course sections">
+    <button type="button" id="prev">Previous</button>
+    <label>
+      <span class="visually-hidden">Go to section</span>
+      <select id="jump"></select>
+    </label>
+    <button type="button" id="next">Next</button>
+  </nav>
+</body>
+</html>
